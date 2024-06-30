@@ -23,7 +23,7 @@ const Menu = () => {
         setLoading(false);
       } catch (error) {
         console.error("Fetch menu error:", error);
-        setLoading(false);
+        // setLoading(false);
       }
     };
 
@@ -71,7 +71,7 @@ const Menu = () => {
     const totalAmount = calculateTotalAmount();
     const order = { tableNumber, orderItems, totalAmount };
 
-    console.log("Placing order:", order);
+    // console.log("Placing order:", order);
     try {
       const response = await fetch("https://fudr.onrender.com/api/orders", {
         method: "POST",
@@ -83,11 +83,9 @@ const Menu = () => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to place order");
+        toast.error("Failed to place order");
+        // throw new Error("Failed to place order");
       }
-
-      const data = await response.json();
-      console.log("Order placed successfully:", data);
       toast.success("Order placed successfully!");
       setCart([]);
     } catch (error) {
@@ -125,14 +123,14 @@ const Menu = () => {
                   <div className="flex items-center mt-4">
                     <button
                       onClick={() => addToCart(item)}
-                      className="py-2 px-4 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                      className="py-2 px-4 bg-blue-600 text-white rounded-md hover:bg-blue-700">
                       Add to Cart
                     </button>
                     {cart.find((cartItem) => cartItem._id === item._id) && (
                       <div className="flex items-center ml-4">
                         <button
                           onClick={() => removeFromCart(item._id)}
-                          className="py-1 px-3 bg-red-600 text-white rounded-md hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500">
+                          className="py-1 px-3 bg-red-600 text-white rounded-md hover:bg-red-700">
                           -
                         </button>
                         <span className="mx-2">
@@ -143,7 +141,7 @@ const Menu = () => {
                         </span>
                         <button
                           onClick={() => addToCart(item)}
-                          className="py-1 px-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+                          className="py-1 px-3 bg-green-600 text-white rounded-md hover:bg-green-700">
                           +
                         </button>
                       </div>
@@ -168,13 +166,16 @@ const Menu = () => {
                     &#8377;{item.price.toFixed(2)}
                   </p>
                   <p className="text-gray-700">Quantity: {item.quantity}</p>
+                  <p className="text-gray-700">
+                    Total: {(item.price * item.quantity).toFixed(2)}
+                  </p>
                 </div>
               </li>
             ))}
           </ul>
           <button
             onClick={handlePlaceOrder}
-            className="mt-4 py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500">
+            className="mt-4 py-2 px-4 bg-green-600 text-white rounded-md hover:bg-green-700">
             Place Order
           </button>
         </div>
