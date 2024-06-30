@@ -110,7 +110,7 @@ const ManageMenuItems = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gray-50">
+    <div className="container mx-auto px-4 py-8 ">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold">Manage Menu Items</h1>
         <div className="space-x-4">
@@ -130,7 +130,7 @@ const ManageMenuItems = () => {
         <div>No menu items found.</div>
       ) : (
         <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-50">
+          <thead className="">
             <tr>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Name

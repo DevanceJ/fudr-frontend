@@ -96,7 +96,7 @@ const OrderList = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-gray-50">
+    <div className="container mx-auto px-4 py-8 ">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold">Orders</h1>
         <div className="space-x-4">
