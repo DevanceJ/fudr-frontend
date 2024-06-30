@@ -68,7 +68,7 @@ const OrderList = () => {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
           body: JSON.stringify({
-            status: "completed", // Update status to completed
+            status: "completed",
           }),
         }
       );

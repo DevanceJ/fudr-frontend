@@ -29,7 +29,7 @@ const Login = () => {
         return;
       }
       const data = await response.json();
-      console.log("Login", data); // Handle token storage or redirection
+      console.log("Login", data);
       localStorage.setItem("accessToken", data.accessToken);
       navigate("/menu");
     } catch (error) {

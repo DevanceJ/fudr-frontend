@@ -26,7 +26,7 @@ const AddMenuItem = () => {
           "https://fudr.onrender.com/api/users/current",
           {
             headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`, // Include JWT token for authentication
+              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
             },
           }
         );
@@ -38,7 +38,6 @@ const AddMenuItem = () => {
         setLoading(false);
       } catch (error) {
         console.error("Fetch user role error:", error);
-        // Handle error, show message to user, etc.
         setLoading(false);
       }
     };
@@ -77,10 +76,8 @@ const AddMenuItem = () => {
         category: "",
         image: null,
       });
-      // Reset form or show success message
     } catch (error) {
       console.error("Error adding menu item:", error);
-      // Handle error state or show error message
     }
   };
 

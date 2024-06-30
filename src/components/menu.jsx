@@ -36,7 +36,6 @@ const Menu = () => {
     );
 
     if (existingItemIndex !== -1) {
-      // Item already in cart, update quantity
       const updatedCart = [...cart];
       updatedCart[existingItemIndex] = {
         ...updatedCart[existingItemIndex],
@@ -62,7 +61,7 @@ const Menu = () => {
   };
 
   const handlePlaceOrder = async () => {
-    const tableNumber = 1; // Hardcoded for now
+    const tableNumber = parseInt(prompt("Enter table number"));
     const orderItems = cart.map(({ _id, name, quantity, price }) => ({
       _id,
       name,
@@ -104,7 +103,6 @@ const Menu = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-semibold mb-6">Menu</h1>
-      {/* Render menu items categorized */}
       {Object.entries(groupByCategory(menuItems)).map(([category, items]) => (
         <div key={category} className="mb-8">
           <h2 className="text-2xl font-semibold mb-4">{category}</h2>
@@ -158,7 +156,6 @@ const Menu = () => {
         </div>
       ))}
 
-      {/* Display cart contents */}
       {cart.length > 0 && (
         <div className="mt-8">
           <h2 className="text-2xl font-semibold mb-4">Cart</h2>
@@ -187,7 +184,6 @@ const Menu = () => {
   );
 };
 
-// Utility function to group menu items by category
 const groupByCategory = (menuItems) => {
   const grouped = {};
   menuItems.forEach((item) => {

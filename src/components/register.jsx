@@ -29,7 +29,7 @@ const Register = () => {
         return;
       }
       const data = await response.json();
-      console.log("Registration success:", data); // Handle redirection or notification
+      console.log("Registration success:", data);
       toast.success("Registration successful!");
       navigate("/menu");
     } catch (error) {
