@@ -101,7 +101,7 @@ const Menu = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-gray-50">
       <h1 className="text-3xl font-semibold mb-6">Menu</h1>
       {Object.entries(groupByCategory(menuItems)).map(([category, items]) => (
         <div key={category} className="mb-8">
