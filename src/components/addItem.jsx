@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/constants";
 
 const AddMenuItem = () => {
   const [isAdmin, setIsAdmin] = useState(false);
@@ -14,6 +15,7 @@ const AddMenuItem = () => {
     category: "",
     image: null,
   });
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -22,14 +24,11 @@ const AddMenuItem = () => {
   useEffect(() => {
     const fetchUserRole = async () => {
       try {
-        const response = await fetch(
-          "https://fudr.onrender.com/api/users/current",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
+        const response = await fetch(`${API_URL}/api/users/current`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
@@ -57,7 +56,7 @@ const AddMenuItem = () => {
       formDataToSend.append("image", formData.image);
 
       const response = await axios.post(
-        "https://fudr.onrender.com/api/menus",
+        `${API_URL}/api/menus`,
         formDataToSend,
         {
           headers: {
@@ -94,20 +93,20 @@ const AddMenuItem = () => {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 ">
+    <div className="container mx-auto px-4 py-8 min-h-full">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold">Add New Menu Item</h1>
         <div className="space-x-4">
-          <Link
-            to="/orders"
+          <button
+            onClick={() => navigate("/orders")}
             className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
             Orders
-          </Link>
-          <Link
-            to="/admin"
+          </button>
+          <button
+            onClick={() => navigate("/admin")}
             className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
             Manage Menu
-          </Link>
+          </button>
         </div>
       </div>
       <form className="space-y-4" onSubmit={handleSubmit}>

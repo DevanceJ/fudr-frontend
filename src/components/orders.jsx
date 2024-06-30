@@ -1,24 +1,23 @@
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/constants";
 
 const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserRole = async () => {
       try {
-        const response = await fetch(
-          "https://fudr.onrender.com/api/users/current",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
+        const response = await fetch(`${API_URL}/api/users/current`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
@@ -37,7 +36,7 @@ const OrderList = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch("https://fudr.onrender.com/api/orders", {
+        const response = await fetch(`${API_URL}/api/orders`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
@@ -59,19 +58,16 @@ const OrderList = () => {
 
   const handleUpdateStatus = async (orderId) => {
     try {
-      const response = await fetch(
-        `https://fudr.onrender.com/api/orders/${orderId}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-          body: JSON.stringify({
-            status: "completed",
-          }),
-        }
-      );
+      const response = await fetch(`${API_URL}/api/orders/${orderId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+        body: JSON.stringify({
+          status: "completed",
+        }),
+      });
 
       if (!response.ok) {
         throw new Error("Failed to update order status");
@@ -100,16 +96,16 @@ const OrderList = () => {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold">Orders</h1>
         <div className="space-x-4">
-          <Link
-            to="/add"
+          <button
+            onClick={() => navigate("/add")}
             className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
             Add Item
-          </Link>
-          <Link
-            to="/admin"
+          </button>
+          <button
+            onClick={() => navigate("/admin")}
             className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
             Manage Menu
-          </Link>
+          </button>
         </div>
       </div>
       {orders.length > 0 ? (

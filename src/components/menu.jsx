@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { API_URL } from "../utils/constants";
 
 const Menu = () => {
   const [menuItems, setMenuItems] = useState([]);
@@ -10,7 +11,7 @@ const Menu = () => {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const response = await fetch("https://fudr.onrender.com/api/menus", {
+        const response = await fetch(`${API_URL}/api/menus`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
           },
@@ -73,7 +74,7 @@ const Menu = () => {
 
     // console.log("Placing order:", order);
     try {
-      const response = await fetch("https://fudr.onrender.com/api/orders", {
+      const response = await fetch(`${API_URL}/api/orders`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

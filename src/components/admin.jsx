@@ -2,25 +2,24 @@ import { useState, useEffect } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { API_URL } from "../utils/constants";
 
 const ManageMenuItems = () => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [menuItems, setMenuItems] = useState([]);
   const [editingItem, setEditingItem] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserRole = async () => {
       try {
-        const response = await fetch(
-          "https://fudr.onrender.com/api/users/current",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
+        const response = await fetch(`${API_URL}/api/users/current`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
         if (!response.ok) {
           throw new Error("Failed to fetch user data");
         }
@@ -35,14 +34,11 @@ const ManageMenuItems = () => {
 
     const fetchMenuItems = async () => {
       try {
-        const response = await axios.get(
-          "https://fudr.onrender.com/api/menus",
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-            },
-          }
-        );
+        const response = await axios.get(`${API_URL}/api/menus`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        });
         setMenuItems(response.data);
       } catch (error) {
         console.error("Fetch menu items error:", error);
@@ -55,7 +51,7 @@ const ManageMenuItems = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://fudr.onrender.com/api/menus/${id}`, {
+      await axios.delete(`${API_URL}/api/menus/${id}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
         },
@@ -76,7 +72,7 @@ const ManageMenuItems = () => {
     e.preventDefault();
     try {
       const response = await axios.put(
-        `https://fudr.onrender.com/api/menus/${editingItem._id}`,
+        `${API_URL}/api/menus/${editingItem._id}`,
         editingItem,
         {
           headers: {
@@ -114,16 +110,16 @@ const ManageMenuItems = () => {
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-semibold">Manage Menu Items</h1>
         <div className="space-x-4">
-          <Link
-            to="/add"
+          <button
+            onClick={() => navigate("/add")}
             className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
             Add Item
-          </Link>
-          <Link
-            to="/orders"
+          </button>
+          <button
+            onClick={() => navigate("/orders")}
             className="bg-gray-600 text-white py-2 px-4 rounded-md hover:bg-gray-700">
             Orders
-          </Link>
+          </button>
         </div>
       </div>
       {menuItems.length === 0 ? (
