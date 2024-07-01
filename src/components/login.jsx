@@ -7,10 +7,12 @@ import { API_URL } from "../utils/constants";
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
     try {
       const response = await fetch(`${API_URL}/api/users/login`, {
         method: "POST",
@@ -24,6 +26,7 @@ const Login = () => {
         if (errorData.title === "Unauthorized") {
           toast.error("Wrong email or password.");
         }
+        setIsLoading(false);
         return;
       }
       const data = await response.json();
@@ -32,6 +35,7 @@ const Login = () => {
       navigate("/menu");
     } catch (error) {
       console.error("Login error:", error);
+      setIsLoading(false);
     }
   };
 
@@ -62,8 +66,30 @@ const Login = () => {
           />
           <button
             type="submit"
-            className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 ">
-            Sign in
+            disabled={isLoading}
+            className="w-full flex items-center justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 ">
+            {/* {isLoading ? "Loading..." : "Sign in"} */}
+            {isLoading ? (
+              <svg
+                className="animate-spin h-5 w-5 text-white"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            ) : (
+              "Sign in"
+            )}
           </button>
         </form>
       </div>
