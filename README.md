@@ -12,4 +12,12 @@
 ### Staff Login Sample
 
 - **Email:** abc@gmail.com
-- **Password:** 123
+- **Password:** 12345
+- _(staff accounts can be created with the following request body on register api)_
+```json
+{
+  "email": "abc@gmail.com",
+  "password": "12345",
+  "username": "abc",
+  "role": "admin"
+}
